@@ -1,73 +1,61 @@
-<<<<<<< HEAD
-# React + TypeScript + Vite
+# ✈️ Flight Tracker
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A sleek and minimal flight tracking web app built with **Vite**, **React**, and **Tailwind CSS**.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 📖 Description
 
-## Expanding the ESLint configuration
+**Flight Tracker** lets users:
+- 🔍 Search for flights
+- 📋 View flight details
+- 🗺️ Visualize routes on an interactive map
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Designed with performance, scalability, and developer experience in mind, using modern frontend tools and practices.
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+## 🛠️ Tech Stack
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+| Tool             | Purpose                            |
+|------------------|-------------------------------------|
+| ⚡ Vite           | Lightning-fast development server   |
+| ⚛️ React          | Frontend UI library                 |
+| 🎨 Tailwind CSS   | Utility-first CSS framework         |
+| ⌨️ TypeScript     | Typed JavaScript                   |
+| 🧹 ESLint + Prettier | Code linting and formatting     |
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## ✅ Prerequisites
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-=======
-# Flight-Tracker
->>>>>>> 55edcdc537dce405b981537dcf52a5da33a793f0
+Before you begin, ensure you have:
+
+- [Node.js](https://nodejs.org/) (v18 or higher)
+- npm or yarn
+
+---
+
+## 🚀 Getting Started
+
+```bash
+
+ 1. Clone the Repository
+
+git clone https://github.com/Boredoom17/Flight-Tracker.git
+cd Flight-Tracker
+
+
+
+ 2. Install Dependencies
+
+npm install
+# or
+yarn install
+
+
+3. Run the Development Server
+
+npm run dev
+# or
+yarn dev
