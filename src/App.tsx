@@ -1,14 +1,13 @@
-import React from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
-import FlightSearch from "./components/FlightSeearch";
+// src/App.tsx
+import React from 'react';
+import MapView from './components/MapView';
 
-const App: React.FC = () => {
+function App() {
   return (
-    <Routes>
-      <Route path="/" element={<FlightSearch />} />
-      <Route path="*" element={<Navigate to="/" replace />} />
-    </Routes>
+    <div className="App">
+      <MapView />
+    </div>
   );
-};
+}
 
 export default App;
