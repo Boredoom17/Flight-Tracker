@@ -1,10 +1,14 @@
 import React from "react";
-import Home from "./pages/Home";
+import { Routes, Route, Navigate } from "react-router-dom";
+import FlightSearch from "./components/FlightSeearch";
 
-export default function App() {
+const App: React.FC = () => {
   return (
-    <div className="min-h-screen bg-gray-100">
-      <Home />
-    </div>
+    <Routes>
+      <Route path="/" element={<FlightSearch />} />
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
   );
-}
+};
+
+export default App;
