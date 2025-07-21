@@ -10,8 +10,8 @@ const Home: React.FC = () => {
       </h1>
       <p className="text-gray-600 text-lg leading-relaxed max-w-xl mx-auto">
         Track flights easily by flight number or route. Use the search option
-        below to start tracking flights and view their live positions on the
-        map.
+        below to start tracking flights and view their live positions and route
+        on the map.
       </p>
 
       {/* Flight Search UI */}
