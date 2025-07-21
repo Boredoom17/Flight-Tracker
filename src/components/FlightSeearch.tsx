@@ -5,23 +5,28 @@ const FlightSearch: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    alert(`Searching flight: ${flightNumber}`);
-    // You can integrate API call here later
+    alert(`Searching for flight: ${flightNumber}`);
+    // Add API logic later
   };
 
   return (
-    <div style={{ padding: 20 }}>
-      <h1>Flight Tracker</h1>
-      <form onSubmit={handleSubmit}>
+    <div className="flex flex-col items-center justify-center min-h-[70vh] px-4">
+      <h2 className="text-3xl font-semibold text-blue-600 mb-6">
+        Search Your Flight
+      </h2>
+      <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4">
         <input
           type="text"
           placeholder="Enter flight number"
           value={flightNumber}
           onChange={(e) => setFlightNumber(e.target.value)}
-          style={{ padding: 8, width: 250, marginRight: 10 }}
+          className="p-3 w-72 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
           required
         />
-        <button type="submit" style={{ padding: "8px 16px" }}>
+        <button
+          type="submit"
+          className="px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+        >
           Search
         </button>
       </form>

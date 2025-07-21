@@ -1,19 +1,7 @@
-/* Basic reset and fonts */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background-color: #f7f7f7;
-}
-
-h1 {
-  color: #222;
-}
-
-input,
-button {
-  font-size: 16px;
+  font-family: "Segoe UI", sans-serif;
 }

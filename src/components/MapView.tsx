@@ -1,10 +1,9 @@
-// src/components/MapView.tsx
 import React from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 
-// Fix for missing marker icons in Leaflet
+// Fix Leaflet marker icons
 delete (L.Icon.Default as any).prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl:
@@ -17,19 +16,21 @@ L.Icon.Default.mergeOptions({
 
 const MapView = () => {
   return (
-    <MapContainer
-      center={[27.7, 85.3]}
-      zoom={7}
-      style={{ height: "100vh", width: "100%" }}
-    >
-      <TileLayer
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        attribution="&copy; OpenStreetMap contributors"
-      />
-      <Marker position={[27.7, 85.3]}>
-        <Popup>Kathmandu, Nepal</Popup>
-      </Marker>
-    </MapContainer>
+    <div className="h-[70vh] p-4">
+      <MapContainer
+        center={[27.7, 85.3]}
+        zoom={7}
+        className="h-full w-full rounded-md shadow-md"
+      >
+        <TileLayer
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          attribution="&copy; OpenStreetMap contributors"
+        />
+        <Marker position={[27.7, 85.3]}>
+          <Popup>Kathmandu, Nepal</Popup>
+        </Marker>
+      </MapContainer>
+    </div>
   );
 };
 
