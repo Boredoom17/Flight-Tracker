@@ -3,8 +3,10 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   background: linear-gradient(to right, #f8f9fa, #e8f0fe);
+  font-family: "Inter", sans-serif;
+  background-color: #f9fafb;
+  color: #333;
 }
 
 .main-wrapper {
@@ -78,4 +80,16 @@ button:hover {
   height: 300px;
   border-radius: 10px;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+.no-underline {
+  text-decoration: none !important;
+}
+.no-underline:hover {
+  text-decoration: none !important;
+}
+
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
 }

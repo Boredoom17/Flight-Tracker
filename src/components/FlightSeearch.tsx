@@ -1,37 +1,96 @@
+// src/components/FlightSeearch.tsx
 import React, { useState } from "react";
 
-const FlightSearch: React.FC = () => {
+const FlightSeearch: React.FC = () => {
+  const [activeTab, setActiveTab] = useState<"flight" | "route">("flight");
   const [flightNumber, setFlightNumber] = useState("");
+  const [from, setFrom] = useState("");
+  const [to, setTo] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleFlightSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    alert(`Searching for flight: ${flightNumber}`);
-    // Add API logic later
+    alert(`Searching flight: ${flightNumber}`);
+    // TODO: Replace alert with actual search logic or API call
+  };
+
+  const handleRouteSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    alert(`Searching flights from ${from} to ${to}`);
+    // TODO: Replace alert with actual search logic or API call
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-[70vh] px-4">
-      <h2 className="text-3xl font-semibold text-blue-600 mb-6">
-        Search Your Flight
-      </h2>
-      <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4">
-        <input
-          type="text"
-          placeholder="Enter flight number"
-          value={flightNumber}
-          onChange={(e) => setFlightNumber(e.target.value)}
-          className="p-3 w-72 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
-          required
-        />
+    <div className="max-w-4xl mx-auto p-6 bg-white rounded shadow-md">
+      {/* Tabs */}
+      <div className="flex border-b border-gray-300 mb-6">
         <button
-          type="submit"
-          className="px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+          onClick={() => setActiveTab("flight")}
+          className={`flex-1 py-3 font-semibold ${
+            activeTab === "flight"
+              ? "border-b-4 border-blue-600 text-blue-700"
+              : "text-gray-600 hover:text-blue-600"
+          }`}
         >
-          Search
+          Search by Flight Number
         </button>
-      </form>
+        <button
+          onClick={() => setActiveTab("route")}
+          className={`flex-1 py-3 font-semibold ${
+            activeTab === "route"
+              ? "border-b-4 border-blue-600 text-blue-700"
+              : "text-gray-600 hover:text-blue-600"
+          }`}
+        >
+          Search by Route
+        </button>
+      </div>
+
+      {/* Forms */}
+      {activeTab === "flight" ? (
+        <form onSubmit={handleFlightSubmit} className="flex gap-4">
+          <input
+            type="text"
+            placeholder="Enter flight number"
+            value={flightNumber}
+            onChange={(e) => setFlightNumber(e.target.value)}
+            className="flex-grow border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+          <button
+            type="submit"
+            className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition"
+          >
+            Search
+          </button>
+        </form>
+      ) : (
+        <form onSubmit={handleRouteSubmit} className="flex gap-4 flex-wrap">
+          <input
+            type="text"
+            placeholder="From"
+            value={from}
+            onChange={(e) => setFrom(e.target.value)}
+            className="flex-grow min-w-[150px] border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+          <input
+            type="text"
+            placeholder="To"
+            value={to}
+            onChange={(e) => setTo(e.target.value)}
+            className="flex-grow min-w-[150px] border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+          <button
+            type="submit"
+            className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition"
+          >
+            Search
+          </button>
+        </form>
+      )}
     </div>
   );
 };
 
-export default FlightSearch;
+export default FlightSeearch;

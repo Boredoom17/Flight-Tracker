@@ -3,7 +3,6 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 
-// Fix Leaflet marker icons
 delete (L.Icon.Default as any).prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl:
@@ -14,7 +13,12 @@ L.Icon.Default.mergeOptions({
     "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png",
 });
 
-const MapView = () => {
+interface MapViewProps {
+  searchData: any; // You can type properly if you want
+}
+
+const MapView: React.FC<MapViewProps> = ({ searchData }) => {
+  // TODO: Use searchData to show markers, adjust map center etc.
   return (
     <div className="h-[70vh] p-4">
       <MapContainer
