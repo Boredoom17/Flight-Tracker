@@ -2,11 +2,19 @@ import React, { useState } from "react";
 import Header from "./Header";
 import MapView from "./MapView";
 import FlightSearch from "./FlightSearch";
-import FlightDetails from "./FlightDetails";
+import FlightDetails from "./FlightDetail";
 import Footer from "./Footer";
 
+// Define proper types for search data
+interface SearchData {
+  from?: string;
+  to?: string;
+  fromCoords?: [number, number];
+  toCoords?: [number, number];
+}
+
 const Home: React.FC = () => {
-  const [searchData, setSearchData] = useState<any>(null);
+  const [searchData, setSearchData] = useState<SearchData | null>(null);
   const [showMap, setShowMap] = useState(false);
 
   // Allow Header to trigger map visibility
@@ -25,7 +33,7 @@ const Home: React.FC = () => {
 
       {/* Conditionally show map */}
       {showMap && (
-        <section id="map" className="w-full h-[400px]">
+        <section id="map" className="w-full h-[400px] bg-white shadow-sm">
           <MapView searchData={searchData} />
         </section>
       )}

@@ -1,109 +1,123 @@
-// src/components/FlightSearch.tsx
 import React, { useState } from "react";
 
+// Define the search data type
+interface SearchData {
+  from?: string;
+  to?: string;
+  fromCoords?: [number, number];
+  toCoords?: [number, number];
+}
+
 interface FlightSearchProps {
-  onSearch: (data: any) => void;
+  onSearch: (data: SearchData) => void;
 }
 
 const FlightSearch: React.FC<FlightSearchProps> = ({ onSearch }) => {
-  const [activeTab, setActiveTab] = useState<"flight" | "route">("flight");
-  const [flightNumber, setFlightNumber] = useState("");
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleFlightSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    const searchData = {
-      type: "flight",
-      flightNumber: flightNumber.trim(),
+  // Mock coordinate lookup - in real app, you'd use a geocoding API
+  const getCoordinates = async (
+    location: string
+  ): Promise<[number, number] | null> => {
+    // Simple mock data for common airports/cities
+    const locations: Record<string, [number, number]> = {
+      kathmandu: [27.7172, 85.324],
+      delhi: [28.6139, 77.209],
+      mumbai: [19.076, 72.8777],
+      bangkok: [13.7563, 100.5018],
+      singapore: [1.3521, 103.8198],
+      dubai: [25.2048, 55.2708],
     };
 
-    onSearch(searchData); // Pass data to App
+    const key = location.toLowerCase();
+    return locations[key] || null;
   };
 
-  const handleRouteSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!from.trim() || !to.trim()) return;
 
-    const searchData = {
-      type: "route",
-      from: from.trim(),
-      to: to.trim(),
-    };
+    setIsLoading(true);
 
-    onSearch(searchData); // Pass data to App
+    try {
+      const fromCoords = await getCoordinates(from.trim());
+      const toCoords = await getCoordinates(to.trim());
+
+      const searchData: SearchData = {
+        from: from.trim(),
+        to: to.trim(),
+        fromCoords: fromCoords || undefined,
+        toCoords: toCoords || undefined,
+      };
+
+      onSearch(searchData);
+    } catch (error) {
+      console.error("Error searching flights:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-white rounded shadow-md">
-      {/* Tabs */}
-      <div className="flex border-b border-gray-300 mb-6">
-        <button
-          onClick={() => setActiveTab("flight")}
-          className={`flex-1 py-3 font-semibold ${
-            activeTab === "flight"
-              ? "border-b-4 border-blue-600 text-blue-700"
-              : "text-gray-600 hover:text-blue-600"
-          }`}
-        >
-          Search by Flight Number
-        </button>
-        <button
-          onClick={() => setActiveTab("route")}
-          className={`flex-1 py-3 font-semibold ${
-            activeTab === "route"
-              ? "border-b-4 border-blue-600 text-blue-700"
-              : "text-gray-600 hover:text-blue-600"
-          }`}
-        >
-          Search by Route
-        </button>
-      </div>
+    <div className="bg-white rounded-lg shadow-md p-6">
+      <h2 className="text-2xl font-bold mb-6 text-center">Search Flights</h2>
 
-      {/* Forms */}
-      {activeTab === "flight" ? (
-        <form onSubmit={handleFlightSubmit} className="flex gap-4">
-          <input
-            type="text"
-            placeholder="Enter flight number"
-            value={flightNumber}
-            onChange={(e) => setFlightNumber(e.target.value)}
-            className="flex-grow border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            required
-          />
-          <button
-            type="submit"
-            className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition"
+      <form
+        onSubmit={handleSubmit}
+        className="flex flex-col gap-4 max-w-md mx-auto"
+      >
+        <div>
+          <label
+            htmlFor="from"
+            className="block text-sm font-medium text-gray-700 mb-1"
           >
-            Search
-          </button>
-        </form>
-      ) : (
-        <form onSubmit={handleRouteSubmit} className="flex gap-4 flex-wrap">
+            From
+          </label>
           <input
+            id="from"
             type="text"
-            placeholder="From"
+            placeholder="e.g., Kathmandu, Delhi, Mumbai"
             value={from}
             onChange={(e) => setFrom(e.target.value)}
-            className="flex-grow min-w-[150px] border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             required
+            disabled={isLoading}
           />
+        </div>
+
+        <div>
+          <label
+            htmlFor="to"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
+            To
+          </label>
           <input
+            id="to"
             type="text"
-            placeholder="To"
+            placeholder="e.g., Bangkok, Singapore, Dubai"
             value={to}
             onChange={(e) => setTo(e.target.value)}
-            className="flex-grow min-w-[150px] border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             required
+            disabled={isLoading}
           />
-          <button
-            type="submit"
-            className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition"
-          >
-            Search
-          </button>
-        </form>
-      )}
+        </div>
+
+        <button
+          type="submit"
+          disabled={isLoading}
+          className="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition-colors disabled:bg-blue-400 disabled:cursor-not-allowed"
+        >
+          {isLoading ? "Searching..." : "Search Flights"}
+        </button>
+      </form>
+
+      <div className="mt-4 text-xs text-gray-500 text-center">
+        Try: Kathmandu, Delhi, Mumbai, Bangkok, Singapore, Dubai
+      </div>
     </div>
   );
 };
