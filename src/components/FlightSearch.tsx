@@ -1,7 +1,11 @@
-// src/components/FlightSeearch.tsx
+// src/components/FlightSearch.tsx
 import React, { useState } from "react";
 
-const FlightSeearch: React.FC = () => {
+interface FlightSearchProps {
+  onSearch: (data: any) => void;
+}
+
+const FlightSearch: React.FC<FlightSearchProps> = ({ onSearch }) => {
   const [activeTab, setActiveTab] = useState<"flight" | "route">("flight");
   const [flightNumber, setFlightNumber] = useState("");
   const [from, setFrom] = useState("");
@@ -9,14 +13,25 @@ const FlightSeearch: React.FC = () => {
 
   const handleFlightSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    alert(`Searching flight: ${flightNumber}`);
-    // TODO: Replace alert with actual search logic or API call
+
+    const searchData = {
+      type: "flight",
+      flightNumber: flightNumber.trim(),
+    };
+
+    onSearch(searchData); // Pass data to App
   };
 
   const handleRouteSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    alert(`Searching flights from ${from} to ${to}`);
-    // TODO: Replace alert with actual search logic or API call
+
+    const searchData = {
+      type: "route",
+      from: from.trim(),
+      to: to.trim(),
+    };
+
+    onSearch(searchData); // Pass data to App
   };
 
   return (
@@ -93,4 +108,4 @@ const FlightSeearch: React.FC = () => {
   );
 };
 
-export default FlightSeearch;
+export default FlightSearch;
