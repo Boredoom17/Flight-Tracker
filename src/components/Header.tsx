@@ -2,35 +2,28 @@ import React from "react";
 
 interface HeaderProps {
   onShowMap: () => void;
+  onLiveView: () => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ onShowMap }) => {
+const Header: React.FC<HeaderProps> = ({ onShowMap, onLiveView }) => {
   return (
-    <header className="bg-white shadow-md">
-      <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-        <div className="text-2xl font-bold text-blue-600">Flight Tracker</div>
-        <nav>
-          <ul className="flex gap-6 text-gray-700 font-medium">
-            <li>
-              <button
-                onClick={onShowMap}
-                className="hover:text-blue-600 transition"
-              >
-                Live Map
-              </button>
-            </li>
-            <li>
-              <a href="#data-center" className="hover:text-blue-600 transition">
-                Data Center
-              </a>
-            </li>
-            <li>
-              <a href="#about" className="hover:text-blue-600 transition">
-                About
-              </a>
-            </li>
-          </ul>
-        </nav>
+    <header className="bg-blue-600 text-white shadow-md">
+      <div className="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+        <h1 className="text-2xl font-bold">Flight Tracker</h1>
+        <div className="flex gap-4">
+          <button
+            onClick={onShowMap}
+            className="px-4 py-2 rounded hover:bg-blue-700 transition-colors"
+          >
+            Search Flights
+          </button>
+          <button
+            onClick={onLiveView}
+            className="px-4 py-2 rounded hover:bg-blue-700 transition-colors"
+          >
+            Live Map
+          </button>
+        </div>
       </div>
     </header>
   );
