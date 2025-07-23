@@ -97,8 +97,8 @@ const MapView: React.FC<MapViewProps> = ({
         zoom={7}
         className="h-full w-full"
         ref={mapRef}
-        whenCreated={(map) => {
-          mapRef.current = map;
+        whenReady={(event) => {
+          mapRef.current = event.target;
         }}
       >
         <TileLayer
