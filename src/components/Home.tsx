@@ -4,8 +4,9 @@ import MapView from "./MapView";
 import FlightSearch from "./FlightSearch";
 import FlightDetails from "./FlightDetail";
 import Footer from "./Footer";
+import "leaflet/dist/leaflet.css";
+import { fetchLivePlanes } from "../utils/fetchPlanes";
 
-// Define proper types for search data
 interface SearchData {
   from?: string;
   to?: string;
@@ -17,29 +18,35 @@ const Home: React.FC = () => {
   const [searchData, setSearchData] = useState<SearchData | null>(null);
   const [showMap, setShowMap] = useState(false);
 
-  // Allow Header to trigger map visibility
   const handleShowMap = () => {
     setShowMap(true);
-    // Smooth scroll to map section
     setTimeout(() => {
       const el = document.getElementById("map");
       if (el) el.scrollIntoView({ behavior: "smooth" });
-    }, 100); // delay to ensure map appears before scrolling
+    }, 100);
+  };
+
+  const handleSearch = (data: SearchData) => {
+    setSearchData(data);
+    setShowMap(true);
+    setTimeout(() => {
+      const el = document.getElementById("map");
+      if (el) el.scrollIntoView({ behavior: "smooth" });
+    }, 100);
   };
 
   return (
     <div className="min-h-screen bg-gray-100 text-gray-900">
       <Header onShowMap={handleShowMap} />
 
-      {/* Conditionally show map */}
       {showMap && (
-        <section id="map" className="w-full h-[400px] bg-white shadow-sm">
+        <section id="map" className="w-full h-[500px] bg-white shadow-sm">
           <MapView searchData={searchData} />
         </section>
       )}
 
       <main className="max-w-6xl mx-auto px-4 py-10 flex flex-col gap-8">
-        <FlightSearch onSearch={setSearchData} />
+        <FlightSearch onSearch={handleSearch} />
         <FlightDetails />
       </main>
 
