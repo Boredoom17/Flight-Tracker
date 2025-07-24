@@ -1,15 +1,13 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Header from "./components/Header";
-import Home from "./components/Home"; // Create if not already
-import MapComponent from "./components/MapComponent";
+import Home from "./components/Home";
+import SearchOnlyMap from "./components/FlightSearch";
 
 function App() {
   return (
     <Router>
-      <Header />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/search" element={<MapComponent />} />
+        <Route path="/search" element={<SearchOnlyMap />} />
       </Routes>
     </Router>
   );

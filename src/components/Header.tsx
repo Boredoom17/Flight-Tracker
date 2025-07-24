@@ -1,6 +1,7 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { PaperAirplaneIcon } from '@heroicons/react/24/solid';
+// src/components/Header.tsx
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import { PaperAirplaneIcon } from "@heroicons/react/24/solid";
 
 interface HeaderProps {
   onShowMap?: () => void;
@@ -11,23 +12,26 @@ const Header: React.FC<HeaderProps> = ({ onShowMap, onLiveView }) => {
   const navigate = useNavigate();
 
   const handleHomeClick = () => {
-    navigate('/');
+    navigate("/");
     window.scrollTo(0, 0);
-    if (onShowMap) onShowMap();
+    if (onShowMap) onShowMap(); // optional
+  };
+
+  const handleFlightSearchClick = () => {
+    navigate("/search");
   };
 
   const handleLiveViewClick = () => {
     if (onLiveView) {
       onLiveView();
     } else {
-      navigate('/live-radar');
+      navigate("/live-radar");
     }
   };
 
   return (
     <header className="bg-gradient-to-r from-blue-600 to-blue-800 text-white shadow-lg sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex justify-between items-center">
-        {/* Logo with home navigation */}
         <div
           onClick={handleHomeClick}
           className="flex items-center space-x-2 cursor-pointer group active:scale-95 transition-transform"
@@ -41,7 +45,7 @@ const Header: React.FC<HeaderProps> = ({ onShowMap, onLiveView }) => {
 
         <nav className="flex space-x-2 sm:space-x-4">
           <button
-            onClick={onShowMap}
+            onClick={handleFlightSearchClick}
             className="px-3 py-1.5 rounded-md hover:bg-blue-700 transition-colors font-medium text-xs sm:text-sm uppercase tracking-wider flex items-center"
           >
             <span className="hidden sm:inline">Flight</span> Search
