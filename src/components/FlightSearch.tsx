@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import Header from "./Header";
+import FlightSearchForm from "./FlightSearch"; // Import the search form component
 import MapView from "./MapView";
 import { fetchLivePlanes } from "../utils/fetchPlanes";
 import "leaflet/dist/leaflet.css";
@@ -57,7 +59,8 @@ const SearchOnlyMap: React.FC = () => {
     <div className="min-h-screen bg-gray-100 text-gray-900">
       <Header />
       <main className="max-w-6xl mx-auto px-4 py-10">
-        <FlightSearch onSearch={handleSearch} />
+        <FlightSearchForm onSearch={handleSearch} />{" "}
+        {/* Use the form component */}
       </main>
       <section id="map" className="w-full h-[calc(100vh-80px)] bg-white">
         <MapView

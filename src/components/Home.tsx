@@ -6,7 +6,7 @@ import Footer from "./Footer";
 const Home: React.FC = () => {
   const handleSearch = (data: any) => {
     console.log("Search data:", data); // Placeholder for search handling
-    // You can add navigation to /search with search data if needed
+    // You can enhance this to navigate to /search or update state
   };
 
   return (
