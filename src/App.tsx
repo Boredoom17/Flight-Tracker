@@ -1,18 +1,18 @@
-import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Home from "./components/Home";
+import Header from "./components/Header";
+import Home from "./components/Home"; // Create if not already
+import MapComponent from "./components/MapComponent";
 
-const App: React.FC = () => {
+function App() {
   return (
     <Router>
-      <div className="min-h-screen bg-gray-50">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          {/* Optional separate route for live radar */}
-        </Routes>
-      </div>
+      <Header />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/search" element={<MapComponent />} />
+      </Routes>
     </Router>
   );
-};
+}
 
 export default App;
