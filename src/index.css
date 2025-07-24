@@ -2,3 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
+#map {
+  height: calc(100vh - 80px);
+}
