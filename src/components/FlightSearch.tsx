@@ -13,13 +13,17 @@ interface FlightSearchProps {
 }
 
 const FlightSearch: React.FC<FlightSearchProps> = ({ onSearch }) => {
-  const [searchType, setSearchType] = useState<"route" | "flightNumber">("route");
+  const [searchType, setSearchType] = useState<"route" | "flightNumber">(
+    "route"
+  );
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
   const [flightNumber, setFlightNumber] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const getCoordinates = async (location: string): Promise<[number, number] | null> => {
+  const getCoordinates = async (
+    location: string
+  ): Promise<[number, number] | null> => {
     const locations: Record<string, [number, number]> = {
       kathmandu: [27.7172, 85.324],
       delhi: [28.6139, 77.209],
@@ -38,7 +42,7 @@ const FlightSearch: React.FC<FlightSearchProps> = ({ onSearch }) => {
     try {
       if (searchType === "route") {
         if (!from.trim() || !to.trim()) return;
-        
+
         const fromCoords = await getCoordinates(from.trim());
         const toCoords = await getCoordinates(to.trim());
 
@@ -46,7 +50,7 @@ const FlightSearch: React.FC<FlightSearchProps> = ({ onSearch }) => {
           from: from.trim(),
           to: to.trim(),
           fromCoords: fromCoords || undefined,
-          toCoords: toCoords || undefined
+          toCoords: toCoords || undefined,
         });
       } else {
         if (!flightNumber.trim()) return;
@@ -62,27 +66,41 @@ const FlightSearch: React.FC<FlightSearchProps> = ({ onSearch }) => {
   return (
     <div className="bg-white rounded-lg shadow-md p-6">
       <h2 className="text-2xl font-bold mb-6 text-center">Search Flights</h2>
-      
+
       <div className="flex mb-4 border-b">
         <button
-          className={`flex-1 py-2 font-medium ${searchType === "route" ? "text-blue-600 border-b-2 border-blue-600" : "text-gray-500"}`}
+          className={`flex-1 py-2 font-medium ${
+            searchType === "route"
+              ? "text-blue-600 border-b-2 border-blue-600"
+              : "text-gray-500"
+          }`}
           onClick={() => setSearchType("route")}
         >
           Route
         </button>
         <button
-          className={`flex-1 py-2 font-medium ${searchType === "flightNumber" ? "text-blue-600 border-b-2 border-blue-600" : "text-gray-500"}`}
+          className={`flex-1 py-2 font-medium ${
+            searchType === "flightNumber"
+              ? "text-blue-600 border-b-2 border-blue-600"
+              : "text-gray-500"
+          }`}
           onClick={() => setSearchType("flightNumber")}
         >
           Flight Number
         </button>
       </div>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4 max-w-md mx-auto">
+      <form
+        onSubmit={handleSubmit}
+        className="flex flex-col gap-4 max-w-md mx-auto"
+      >
         {searchType === "route" ? (
           <>
             <div>
-              <label htmlFor="from" className="block text-sm font-medium text-gray-700 mb-1">
+              <label
+                htmlFor="from"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
                 From
               </label>
               <input
@@ -97,7 +115,10 @@ const FlightSearch: React.FC<FlightSearchProps> = ({ onSearch }) => {
               />
             </div>
             <div>
-              <label htmlFor="to" className="block text-sm font-medium text-gray-700 mb-1">
+              <label
+                htmlFor="to"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
                 To
               </label>
               <input
@@ -114,7 +135,10 @@ const FlightSearch: React.FC<FlightSearchProps> = ({ onSearch }) => {
           </>
         ) : (
           <div>
-            <label htmlFor="flightNumber" className="block text-sm font-medium text-gray-700 mb-1">
+            <label
+              htmlFor="flightNumber"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
               Flight Number
             </label>
             <input
@@ -140,7 +164,7 @@ const FlightSearch: React.FC<FlightSearchProps> = ({ onSearch }) => {
       </form>
 
       <div className="mt-4 text-xs text-gray-500 text-center">
-        {searchType === "route" 
+        {searchType === "route"
           ? "Try: Kathmandu, Delhi, Mumbai, Bangkok"
           : "Try: CA2451, AI101, EK512"}
       </div>
