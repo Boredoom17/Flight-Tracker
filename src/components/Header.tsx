@@ -2,12 +2,18 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { PaperAirplaneIcon } from "@heroicons/react/24/solid";
 
-const Header: React.FC = () => {
+interface HeaderProps {
+  onShowMap?: () => void;
+  onLiveView?: () => void;
+}
+
+const Header: React.FC<HeaderProps> = ({ onShowMap, onLiveView }) => {
   const navigate = useNavigate();
 
   const handleHomeClick = () => {
     navigate("/");
     window.scrollTo(0, 0);
+    if (onShowMap) onShowMap(); // optional
   };
 
   const handleFlightSearchClick = () => {
@@ -15,7 +21,11 @@ const Header: React.FC = () => {
   };
 
   const handleLiveViewClick = () => {
-    navigate("/search"); // Redirect to search for live view
+    if (onLiveView) {
+      onLiveView();
+    } else {
+      navigate("/live-radar");
+    }
   };
 
   return (

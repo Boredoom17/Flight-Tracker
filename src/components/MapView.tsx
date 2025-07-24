@@ -26,19 +26,14 @@ interface MapViewProps {
   isLiveView: boolean;
 }
 
-const MapView: React.FC<MapViewProps> = ({
-  searchData,
-  livePlanes,
-  isLiveView,
-}) => {
+const MapView: React.FC<MapViewProps> = ({ searchData, livePlanes, isLiveView }) => {
   const mapRef = useRef<L.Map | null>(null);
 
   useEffect(() => {
     if (!mapRef.current) {
       mapRef.current = L.map("map").setView([20.0, 0.0], 2); // Default world view
       L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        attribution:
-          '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+        attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
       }).addTo(mapRef.current);
     }
 
@@ -51,12 +46,8 @@ const MapView: React.FC<MapViewProps> = ({
 
     // Add search route markers if searchData exists
     if (searchData?.fromCoords && searchData.toCoords) {
-      L.marker(searchData.fromCoords)
-        .addTo(map)
-        .bindPopup(searchData.from || "Origin");
-      L.marker(searchData.toCoords)
-        .addTo(map)
-        .bindPopup(searchData.to || "Destination");
+      L.marker(searchData.fromCoords).addTo(map).bindPopup(searchData.from || "Origin");
+      L.marker(searchData.toCoords).addTo(map).bindPopup(searchData.to || "Destination");
       map.fitBounds([searchData.fromCoords, searchData.toCoords]);
     }
 
@@ -67,15 +58,11 @@ const MapView: React.FC<MapViewProps> = ({
           L.marker([plane.latitude, plane.longitude])
             .addTo(map)
             .bindPopup(
-              `<strong>${plane.callsign || plane.icao24}</strong><br>Country: ${
-                plane.origin_country
-              }<br>Alt: ${plane.altitude || "N/A"}ft`
+              `<strong>${plane.callsign || plane.icao24}</strong><br>Country: ${plane.origin_country}<br>Alt: ${plane.altitude || "N/A"}ft`
             );
         }
       });
-      map.fitBounds(
-        livePlanes.map((plane) => [plane.latitude, plane.longitude])
-      );
+      map.fitBounds(livePlanes.map((plane) => [plane.latitude, plane.longitude]));
     }
 
     return () => {
