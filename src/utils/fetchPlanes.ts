@@ -1,4 +1,3 @@
-// Enhanced API utilities for flight tracking
 export interface Plane {
   icao24: string;
   callsign?: string;
@@ -45,7 +44,6 @@ export interface RouteInfo {
   airlines: string[];
 }
 
-// Your existing OpenSky function - enhanced
 export async function fetchLivePlanes(bounds?: {
   lamin: number;
   lomin: number;
@@ -55,7 +53,6 @@ export async function fetchLivePlanes(bounds?: {
   try {
     let url = "https://opensky-network.org/api/states/all";
 
-    // Add bounding box for better performance (like FlightRadar24)
     if (bounds) {
       url += `?lamin=${bounds.lamin}&lomin=${bounds.lomin}&lamax=${bounds.lamax}&lomax=${bounds.lomax}`;
     }
@@ -77,7 +74,7 @@ export async function fetchLivePlanes(bounds?: {
         (state: any[]) =>
           state[5] !== null && // longitude
           state[6] !== null && // latitude
-          !state[8] // not on ground (optional filter)
+          !state[8] 
       )
       .map((state: any[]) => ({
         icao24: state[0],
@@ -102,8 +99,6 @@ export async function fetchFlightDetails(
   flightNumber: string
 ): Promise<FlightDetails | null> {
   try {
-    // Using AviationStack API (you'll need to get a free API key)
-    const API_KEY = "e3324d758afed7af5f1098105abf71ad"; // Replace with your key
     const response = await fetch(
       `https://api.aviationstack.com/v1/flights?access_key=${API_KEY}&flight_iata=${flightNumber}&limit=1`
     );
@@ -158,7 +153,7 @@ export async function fetchFlightDetails(
   }
 }
 
-// NEW: Fetch route information
+// Fetch route information
 export async function fetchRouteFlights(
   from: string,
   to: string,
@@ -222,7 +217,7 @@ export async function fetchRouteFlights(
   }
 }
 
-// NEW: OpenSky fallback for flight details
+// OpenSky fallback for flight details
 async function fetchFlightFromOpenSky(
   callsign: string
 ): Promise<FlightDetails | null> {
@@ -239,7 +234,7 @@ async function fetchFlightFromOpenSky(
 
     const state = data.states[0];
 
-    // Basic info from OpenSky (limited compared to AviationStack)
+    // Basic info from OpenSky
     return {
       flight_number: callsign,
       airline: "Unknown",
@@ -276,11 +271,9 @@ function calculateAverageDuration(flights: FlightDetails[]): string {
   return `${hours}h ${minutes}m`;
 }
 
-// NEW: Get airport coordinates for route mapping
 export async function getAirportCoords(
   iataCode: string
 ): Promise<[number, number] | null> {
-  // Common airports database (can be expanded)
   const airports: Record<string, [number, number]> = {
     // Major hubs
     JFK: [40.6413, -73.7781],
@@ -292,23 +285,21 @@ export async function getAirportCoords(
     SIN: [1.3644, 103.9915],
     BKK: [13.69, 100.7501],
 
-    // Your existing locations
-    KTM: [27.6966, 85.3591], // Kathmandu
-    DEL: [28.5562, 77.1], // Delhi
-    BOM: [19.0896, 72.8656], // Mumbai
+    KTM: [27.6966, 85.3591], 
+    DEL: [28.5562, 77.1], 
+    BOM: [19.0896, 72.8656], 
 
-    // Add more as needed...
+   
   };
 
   const coords = airports[iataCode.toUpperCase()];
   if (coords) return coords;
 
-  // If not in our database, you could call an airport API here
-  // For now, return null
+  /
   return null;
 }
 
-// NEW: Error handling wrapper
+// Error handling wrapper
 export async function safeApiCall<T>(
   apiCall: () => Promise<T>,
   fallback: T,
