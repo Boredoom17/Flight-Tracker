@@ -39,7 +39,6 @@ const MapView: React.FC<MapViewProps> = ({
   const routeLayerRef = useRef<L.LayerGroup | null>(null);
   const [selectedPlane, setSelectedPlane] = useState<Plane | null>(null);
 
-  // Create custom plane icon based on heading
   const createPlaneIcon = (plane: Plane, isSelected: boolean = false) => {
     const rotation = plane.heading || 0;
     const size = isSelected ? 24 : 16;
@@ -65,7 +64,6 @@ const MapView: React.FC<MapViewProps> = ({
     });
   };
 
-  // Create route line between two points
   const createRouteLine = (from: [number, number], to: [number, number]) => {
     return L.polyline([from, to], {
       color: "#4444ff",
@@ -85,7 +83,6 @@ const MapView: React.FC<MapViewProps> = ({
         attributionControl: false,
       });
 
-      // Add multiple tile layers for better experience
       const osmLayer = L.tileLayer(
         "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
         {
@@ -136,7 +133,6 @@ const MapView: React.FC<MapViewProps> = ({
     };
   }, []);
 
-  // Handle search data (routes)
   useEffect(() => {
     if (!mapRef.current || !routeLayerRef.current) return;
 
@@ -249,7 +245,6 @@ const MapView: React.FC<MapViewProps> = ({
         icon: planeIcon,
       });
 
-      // Enhanced popup with FlightRadar24-style info
       const popupContent = `
         <div style="min-width: 200px;">
           <div style="border-bottom: 1px solid #eee; padding-bottom: 8px; margin-bottom: 8px;">
@@ -346,7 +341,6 @@ const MapView: React.FC<MapViewProps> = ({
     };
     planesInfo.addTo(map);
 
-    // Cleanup
     return () => {
       map.eachLayer((layer) => {
         if (layer instanceof L.Control && layer.getPosition() === "topright") {
@@ -356,7 +350,6 @@ const MapView: React.FC<MapViewProps> = ({
     };
   }, [livePlanes, isLiveView, selectedPlane]);
 
-  // Add tracking function to global scope
   useEffect(() => {
     (window as any).trackPlane = (icao24: string) => {
       const plane = livePlanes.find((p) => p.icao24 === icao24);
@@ -364,7 +357,6 @@ const MapView: React.FC<MapViewProps> = ({
         setSelectedPlane(plane);
         mapRef.current.setView([plane.latitude, plane.longitude], 10);
 
-        // Add tracking circle
         const trackingCircle = L.circle([plane.latitude, plane.longitude], {
           radius: 10000, // 10km radius
           color: "#ff4444",
@@ -377,7 +369,6 @@ const MapView: React.FC<MapViewProps> = ({
         if (markersRef.current) {
           markersRef.current.addLayer(trackingCircle);
 
-          // Remove after 10 seconds
           setTimeout(() => {
             if (markersRef.current) {
               markersRef.current.removeLayer(trackingCircle);
